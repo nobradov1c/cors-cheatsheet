@@ -109,6 +109,6 @@ If you were to run this code in a web browser, it would fail because setting the
 - Proxy-\*
 - Sec-\*
 
-These headers have special meaning and can only be set by the browser. There is noerror if the code tries to set the header. The value is just ignored.
+These headers have special meaning and can only be set by the browser. There is no error if the code tries to set the header. The value is just ignored.
 
 The server has to give its permission for the client to include custom request headerson a cross-origin request. This behavior is unique to cross-origin requests.
