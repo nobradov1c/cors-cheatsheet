@@ -4,8 +4,6 @@ JavaScript code can make HTTP requests with the XMLHttpRequest object.
 
 ## XMLHttpRequest object
 
----
-
 ```javascript
 const xhr = new XMLHttpRequest();
 if (!("withCredentials" in xhr)) {
@@ -38,8 +36,6 @@ xhr.send("request body goes here");
 
 ## XMLHttpRequest events
 
----
-
 | Event       | Description                                                                              |
 | ----------- | :--------------------------------------------------------------------------------------- |
 | onloadstart | Fires when the request starts.                                                           |
@@ -52,8 +48,6 @@ xhr.send("request body goes here");
 
 ## XMLHttpRequest response properties
 
----
-
 | Response property | Description                                                                                                                                                                                    |
 | ----------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | status            | The HTTP status code (for example, 200 for a successful request).                                                                                                                              |
@@ -63,8 +57,6 @@ xhr.send("request body goes here");
 | responseXML       | The body of the response as a DOM element (XML is here for historical reasons). Can only be used if `responseType` was not set or was set as `document`.                                       |
 
 ## Response Headers
-
----
 
 The `getResponseHeader` and `getAllResponseHeaders` methods can be used to read theHTTP headers on the response.
 
@@ -81,8 +73,6 @@ If the server sets any additional response headers that aren’t in this list, t
 
 ## Cookies
 
----
-
 Cookies can be included on cross-origin requests by setting the `XMLHttpRequest`’s `withCredentials` property to `true`. Setting the `withCredentials` property to `true` indi-cates that user credentials such as cookies, basic authentication information, or client-side Secure Sockets Layer (SSL) certificates should be included on cross-origin requests. The following code snippet shows an example of setting the `withCredentials` propertyto `true`:
 
 ```
@@ -94,8 +84,6 @@ If you were to run this code in a web browser, it would fail because setting the
 - NOTE: The `withCredentials` property doesn’t work with synchronous requests.
 
 ## List of headers that can't be set by setRequestHeader:
-
----
 
 - Accept-Charset
 - Accept-Encoding
