@@ -15,8 +15,9 @@ CORS is a way of making HTTP requests from one place to another. This is a trivi
   - [handling preflight request]()
 - [best practices](https://link)
 
-## Handling CORS request
+## Lifecycle of a CORS request
 
-### Handling prefligh request
-
-## Best practices
+1. The client initiates the request.
+2. The  browser  adds  additional  information  to  the  request  and  forwards  it  tothe server.
+3. The  server  decides  how  to  respond  to  the  request,  and  sends  the  response  tothe browser.
+4. The browser decides whether the client should have access to the response, andeither passes the response to the client or returns an error.

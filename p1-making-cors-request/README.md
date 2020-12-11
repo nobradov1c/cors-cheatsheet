@@ -46,6 +46,19 @@ xhr.send("request body goes here");
 | ontimeout   | Fires when the timeout has been exceeded (if the client code specified a timeout value). |
 | onloadend   | Fires when the request has completed, regardless of whether there was an error or not.   |
 
+### Upload events
+
+```javascript
+function uploadFile(file) {
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "/upload", true);
+  xhr.upload.onprogress = function (e) {
+    console.log("Upload progress: ", (e.loaded / e.total) * 100);
+  };
+  xhr.send(file);
+}
+```
+
 ## XMLHttpRequest response properties
 
 | Response property | Description                                                                                                                                                                                    |
