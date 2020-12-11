@@ -131,3 +131,77 @@ The `Access-Control-Max-Age` value is only a suggestion for how long an item sho
 
 ## Cookies
 
+_NOTE:_ The CORS spec uses the term user credentials to describe any bits of information the browser sets on a request to identify the user. This includes cookies, basic HTTP authentication, and client-side SSL. While the techniques described in this section apply to all of these types of user credentials, the text will focus only on cookies to keep things simple.
+
+Reading the cookies on the server:
+
+```javascript
+const username = req.cookies["username"];
+```
+
+_NOTE:_ You may also have to use a middleware for parsing cookies. In NodeJS, you can do so by running npm install cookie-parser.
+
+Like all other CORS features, the server uses an HTTP response header to define cookie behavior. But unlike other CORS features, there is a client-side component to cookie support. Cookies will only work when both the client and the server are in agreement.
+
+Server side:
+
+The server indicates that it can receive cookies on CORS requests by setting the Access-Control-Allow-Credentials response header. Setting that header to true means that the server allows cookies on the CORS request.
+
+If the request includes a preflight request, the Access-Control-Allow-Credentials header must be present on both the preflight and the actual request. But the cookie will only be sent on the actual request; the preflight request will never have a cookie.
+
+Client side:
+
+In addition to setting a server-side response header, you have to set a property in the client’s JavaScript code to include the cookie with the request.
+
+```javascript
+xhr.withCredentials = true;
+```
+
+### Cookies on the client
+
+JavaScript’s `document.cookie` property allows programmatic access to a site’s cookies. Using `document.cookie`, JavaScript code can read and write the value of a cookie, as shown in the following code snippet. You can print the value of the cookie to the console using
+
+`console.log(document.cookie);`
+
+and you can set the cookie value using
+
+`document.cookie = 'newcookie=1';`
+
+But the preceding code will not work with cross-origin cookies. The `document.cookie` property can’t read or write the value from another origin. Calling `document.cookie` from the client will return only the client’s own cookies, not the cross-origin cookies.
+
+This is because cookies themselves have a same-origin policy similar to the same-origin policy for HTTP requests. Each cookie has a path and a domain, and only pages from that path and domain can read the cookie. So while the cookie is included in the CORS request, the browser still honors the cookie’s same-origin policy, and keeps the cookie hidden from client code.
+
+### Cookies when there is no preflight request
+
+Based on the previous discussion, you may think that if a server doesn’t want cookies, all it needs to do is omit the Access-Control-Allow-Credentials header. However this isn’t quite true. Cookies may still be sent to the server in the case where the request doesn’t have a preflight.
+
+If the client has `withCredentials` set to `true`, and there isn’t a preflight, the cookie will be sent to the server. This is because the browser has no way of predicting what the value of the Access-Control-Allow-Credentials header will be before sending the actual request. When the browser sees that the Access-Control-Allow-Credentials header isn’t set, it will throw an error in the client. But because the client set the `withCredentials` property, the cookie was already sent to the server in the request.
+
+There is a whole class of attacks that can arise from this request-plus-cookie combination called cross-site request forgery (CSRF), and CORS isn’t immune to them. Therefore, standard security precautions such asCSRF prevention should be used when making CORS requests.
+
+### User credentials and access-control-allow-origin
+
+If the Access-Control-Allow-Credentials header is set to `true`, the \* value can’t be used in the Access-Control-Allow-Origin header.
+
+### Setting the cookie from CORS
+
+The rules described in this section also apply to setting the cookie from the server. If the `withCredentials` property and Access-Control-Allow-Credentials header are both `true`, the server can set a cookie on the client. This cookie still can’t be read from JavaScript code, but it will be included on subsequent requests to the server.
+
+## Exposing response headers to the client
+
+The `XMLHttpRequest` object exposes two methods for reading the response headers: `getResponseHeader` and `getAllResponseHeaders`. Same-origin requests can use these methods to read headers from the response. But cross-origin requests have limitations on which response headers can be viewed by the client. By default, only a few response headers are visible to clients on cross-origin requests. These are called simple headers and they are:
+
+- Cache-Control
+- Content-Language
+- Content-Type
+- Expires
+- Last-Modified
+- Pragma
+
+The server needs to specify that it’s okay for the client to read the X-Powered-By header. The server does this by using the Access-Control-Expose-Headers header. TheAccess-Control-Expose-Headers header contains a list of headers that the client code can read.
+
+```javascript
+res.set("Access-Control-Expose-Headers", "X-Powered-By, Time-Zone");
+```
+
+The Access-Control-Expose-Headers header ensures that the client code can only read the response headers intended by the server.
