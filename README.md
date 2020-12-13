@@ -25,6 +25,11 @@ CORS is a way of making HTTP requests from one place to another. This is a trivi
   - [redirects](/p2-handling-cors-request#redirects)
   - [debugging](/p2-handling-cors-request#debugging)
 - [sample server](/p3-sample-server)
+
+  > `npm i`
+
+  > `npm start`
+
 - [best practices](/p4-best-practices)
   - [security](/p4-best-practices#security)
   - [cookies](/p4-best-practices#cookies)

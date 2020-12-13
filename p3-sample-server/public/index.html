@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CORS</title>
+  </head>
+  <body onload="getBlogPosts();">
+    <h1>CORS - client</h1>
+    <div id="output"></div>
+    <script>
+      const createXhr = function (method, url) {
+        const xhr = new XMLHttpRequest();
+        xhr.onerror = function () {
+          document.getElementById("output").innerHTML = "ERROR";
+        };
+        xhr.open(method, url, true);
+        return xhr;
+      };
+
+      const getBlogPosts = function () {
+        const xhr = createXhr("GET", "http://127.0.0.1:9999/api/posts");
+        xhr.setRequestHeader("Timezone-Offset", new Date().getTimezoneOffset());
+        xhr.setRequestHeader("Sample-Source", "CORS in Action");
+        xhr.onload = function () {
+          const data = JSON.parse(xhr.responseText);
+          const elem = document.getElementById("output");
+
+          const xPoweredBy = xhr.getResponseHeader("X-Powered-By");
+          if (xPoweredBy) {
+            const xpbDiv = document.createElement("div");
+            xpbDiv.className = "post";
+            xpbDiv.innerHTML = "X-Powered-By: " + xPoweredBy;
+            elem.appendChild(xpbDiv);
+
+            const hr = document.createElement("hr");
+            elem.appendChild(hr);
+          }
+
+          for (let postId in data) {
+            const postText = data[postId]["post"];
+            const div = document.createElement("div");
+            div.className = "post";
+            div.id = "postId" + postId;
+            div.appendChild(document.createTextNode(postText));
+
+            elem.appendChild(div);
+          }
+        };
+        xhr.send();
+      };
+    </script>
+  </body>
+</html>

@@ -2,6 +2,10 @@
 
 Here you can see an example of how to build a configurable cors server in NodeJS with Express.
 
+> `npm i`
+
+> `npm start`
+
 ## Before you begin
 
 Here are a few questions youshould consider:
