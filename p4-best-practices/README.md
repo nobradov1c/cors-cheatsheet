@@ -8,7 +8,7 @@ CORS isn't security!
 curl -H "Origin: somerandomsite.com" http://127.0.0.1:9999/api/posts
 ```
 
-## Including cookies on requests
+## Cookies
 
 Cookies aren’t included on CORS requests by default, but they can be enabled by setting the Access-Control-Allow-Credentials header to `true`. If you’re thinking about enabling cookies on your API, you should really consider whether you need cookie support. Cookies make requests harder to debug, and expose a new attack vector. So if you don’t need cookies, don’t enable them.
 

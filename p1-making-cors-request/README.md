@@ -96,7 +96,7 @@ If you were to run this code in a web browser, it would fail because setting the
 
 - NOTE: The `withCredentials` property doesn’t work with synchronous requests.
 
-## List of headers that can't be set by setRequestHeader:
+## List of headers that can't be set by setRequestHeader
 
 - Accept-Charset
 - Accept-Encoding
