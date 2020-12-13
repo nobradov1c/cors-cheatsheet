@@ -1,0 +1,22 @@
+{
+  "name": "cors-cheatsheet",
+  "version": "1.0.0",
+  "description": "All about cors.",
+  "main": "p3-sample-server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ObradovicNikola/cors-cheatsheet.git"
+  },
+  "author": "Obradovic Nikola",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ObradovicNikola/cors-cheatsheet/issues"
+  },
+  "homepage": "https://github.com/ObradovicNikola/cors-cheatsheet#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

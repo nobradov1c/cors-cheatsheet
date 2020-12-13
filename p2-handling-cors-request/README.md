@@ -201,7 +201,23 @@ The `XMLHttpRequest` object exposes two methods for reading the response headers
 The server needs to specify that it’s okay for the client to read the X-Powered-By header. The server does this by using the Access-Control-Expose-Headers header. TheAccess-Control-Expose-Headers header contains a list of headers that the client code can read.
 
 ```javascript
-res.set("Access-Control-Expose-Headers", "X-Powered-By, Time-Zone");
+res.set("Access-Control-Expose-Headers", "X-Powered-By, Timezone-Offset");
 ```
 
 The Access-Control-Expose-Headers header ensures that the client code can only read the response headers intended by the server.
+
+## Redirects
+
+```javascript
+serverapp.get("/api/posts", function (req, res) {
+  res.redirect(301, "/api/v2/posts");
+});
+
+serverapp.get("/api/v2/posts", function (req, res) {
+  res.json(POSTS);
+});
+```
+
+- Simple CORS requests will follow redirects.
+- Preflight requests will not follow redirects.
+- If the redirect is to the same server as the original request, the Origin header will stay the same. Otherwise, the Origin header will be set to null.
