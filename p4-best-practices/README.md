@@ -27,5 +27,3 @@ A preflight request can be a performance hit, because it requires two HTTP reque
 
 - Maximizing the preflight cache
 - Changing your site to reduce preflight requests (reduce non-simple requests)
-
-## Debugging

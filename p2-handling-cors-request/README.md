@@ -221,3 +221,32 @@ serverapp.get("/api/v2/posts", function (req, res) {
 - Simple CORS requests will follow redirects.
 - Preflight requests will not follow redirects.
 - If the redirect is to the same server as the original request, the Origin header will stay the same. Otherwise, the Origin header will be set to null.
+
+## Debugging
+
+Regardless of what tools you use to solve the issue, the steps to solving CORS errorsare the same:
+
+1. Capture a snapshot of the request and response headers.
+2. Compare the headers to see if and where there is a mismatch
+3. Fix the issue by either
+   - Updating the client to send the correct headers
+   - Updating the server to allow the client headers
+
+### Tools for debugging
+
+- Browser's developer tools
+  - Console
+  - Network monitor
+- Wireshark (monitor network traffic)
+- curl (to simulate CORS request)
+  - ```bash
+    curl curl http://www.example.com
+    ```
+  - ```bash
+    curl --verbose -H "Origin: http://localhost:1111" http://127.0.0.1:9999/api/posts
+    ```
+  - ```bash
+    # preflight request
+    curl --verbose -H "Origin: null" -H "Access-Control-Request-Method: GET" -X OPTIONS http://127.0.0.1:9999/api/posts
+    ```
+  - _TIP:_ From browser's developer tools you can copy request as cURL
